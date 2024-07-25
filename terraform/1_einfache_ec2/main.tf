@@ -8,10 +8,10 @@ provider "aws" {
 # Sicherheitsgruppe für die EC2 Instanz
 resource "aws_security_group" "my_security_group" {
   name        = "my_security_group"
-  description = "Sicherheitsgruppe SSH, HTTP & HTTPS Zugriff von ÜBERALL"
+  description = "Sicherheitsgruppe SSH, HTTP & HTTPS Zugriff von UEBERALL"
 
   ingress {
-    description = "SSH von überall"
+    description = "SSH von ueberall"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -19,7 +19,7 @@ resource "aws_security_group" "my_security_group" {
   }
 
   ingress {
-    description = "HTTP von überall"
+    description = "HTTP von ueberall"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -27,7 +27,7 @@ resource "aws_security_group" "my_security_group" {
   }
 
   ingress {
-    description = "HTTPS von überall"
+    description = "HTTPS von ueberall"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -46,10 +46,28 @@ resource "aws_security_group" "my_security_group" {
 # Eine Amazon Linux 2023 EC2 Instanz im t2.micro-Format
 resource "aws_instance" "erste_instanz" {
   instance_type          = "t2.micro"
-  ami                    = "ami-071878317c449ae4" # Amazon Linux 2023 AMI
+  ami                    = "ami-071878317c449ae48" # Amazon Linux 2023 AMI
   vpc_security_group_ids = [aws_security_group.my_security_group.id]
 
   tags = {
     Name = "<Brownies>"
   }
+}
+
+# Ausgaben
+output "public_ip" {
+  description = "Oeffentliche IP-Adresse der Instanz"
+  value       = aws_instance.erste_instanz.public_ip
+}
+
+output "security_group_name" {
+  description = "Name der Security Group"
+  value       = aws_security_group.my_security_group.name
+}
+
+output "security_group_rule_arns" {
+  description = "ARN aller Security-Group-Rules"
+  value       = [
+    aws_security_group.my_security_group.id
+  ]
 }
