@@ -19,3 +19,8 @@ variable "instance_type" {
 variable "key_name" {
   description = "SSH key name"
 }
+
+variable "dynamodb_table_name" {
+  description = "The name of the DynamoDB table"
+  default     = "example-table"
+}
