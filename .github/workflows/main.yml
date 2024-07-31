@@ -24,6 +24,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
 
+      - name: Change directory to Terraform configuration
+        run: cd ../../terraform/3_struktur_ec2/main.tf
+
       # Terraform Init
       - name: Terraform Init
         run: terraform init
